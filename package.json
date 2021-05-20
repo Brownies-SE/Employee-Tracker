@@ -1,0 +1,26 @@
+{
+  "name": "employee-managment",
+  "version": "1.0.0",
+  "description": "Employee Management System",
+  "main": "server.js",
+  "dependencies": {
+    "init": "^0.1.2",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Brownies-SE/Employee-Tracker.git"
+  },
+  "keywords": [],
+  "author": "Josh Brown",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Brownies-SE/Employee-Tracker/issues"
+  },
+  "homepage": "https://github.com/Brownies-SE/Employee-Tracker#readme"
+}
