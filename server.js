@@ -1,5 +1,5 @@
 const mysql = require("mysql");
-//const inquirer = require("inquirer");
+const inquirer = require("inquirer");
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -12,9 +12,28 @@ const connection = mysql.createConnection({
 connection.connect((err) => {
   if (err) throw err;
   console.log(`connected as id ${connection.threadId}`);
+  //afterConnection();
+  menu();
 });
 
-const menu = () => {};
+/*
+const afterConnection = () => {
+  connection.query("SELECT * FROM employee", (err, res) => {
+    if (err) throw err;
+    console.log(res);
+    connection.end();
+  });
+};
+*/
+
+const menu = () => {
+  inquirer.prompt({
+    type: "list",
+    name: "Menu",
+    message: "Choose something!",
+    choices: ["yes", "no"],
+  });
+};
 
 const addDepartment = () => {};
 
