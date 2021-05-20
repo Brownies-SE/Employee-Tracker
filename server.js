@@ -1,4 +1,5 @@
 const mysql = require("mysql");
+//const inquirer = require("inquirer");
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -12,3 +13,19 @@ connection.connect((err) => {
   if (err) throw err;
   console.log(`connected as id ${connection.threadId}`);
 });
+
+const menu = () => {};
+
+const addDepartment = () => {};
+
+const addRole = () => {};
+
+const addEmployees = () => {};
+
+const viewDepartments = () => {};
+
+const viewRoles = () => {};
+
+const viewEmployees = () => {};
+
+const upDateRoles = () => {};
