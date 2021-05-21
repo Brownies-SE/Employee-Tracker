@@ -92,6 +92,19 @@ const addEmployeePrompts = [
   },
 ];
 
+const updateEmpRolePrompts = [
+  {
+    type: "input",
+    name: "getEmployeeNumber",
+    message: "Enter employee's role Id: ",
+  },
+  {
+    type: "input",
+    name: "newEmployeeNumber",
+    message: "Enter employee's new Id: ",
+  },
+];
+
 const menu = () => {
   inquirer.prompt(menuPrompts).then((answers) => {
     switch (answers.Menu) {
@@ -120,7 +133,7 @@ const menu = () => {
         break;
 
       case "Update the Roles":
-        upDateRoles();
+        updateRoleId();
         break;
 
       case "Exit":
@@ -217,4 +230,40 @@ const viewEmployees = () => {
   });
 };
 
-const upDateRoles = () => {};
+//Needs Work!
+// const updateRoleId = () => {
+//   inquirer.prompt(updateEmpRolePrompts).then((answers) => {
+//     connection.query(
+//       "UPDATE employee SET role_id ? WHERE ?",
+//       [
+//         {
+//           role_id: answers.newEmployeeNumber,
+//         },
+//         {
+//           id: answers.getEmployeeNumber,
+//         },
+//       ],
+//       (err, data) => {
+//         if (err) throw err;
+//         //console.table(data);
+//         menu();
+//       }
+//     );
+//   });
+// };
+
+const updateRoleId = () => {
+  inquirer.prompt(updateEmpRolePrompts).then((answers) => {
+    const updateEmployee = answers.getEmployeeNumber;
+    const updateNewRole = answers.newEmployeeNumber;
+    connection.query(
+      `UPDATE employee SET role_id = "${updateNewRole}"  WHERE id = "${updateEmployee}"`,
+
+      (err, data) => {
+        if (err) throw err;
+        //console.table(data);
+        menu();
+      }
+    );
+  });
+};
