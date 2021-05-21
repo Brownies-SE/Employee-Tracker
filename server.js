@@ -1,5 +1,6 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
+const table = require("console.table");
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -12,7 +13,6 @@ const connection = mysql.createConnection({
 connection.connect((err) => {
   if (err) throw err;
   console.log(`connected as id ${connection.threadId}`);
-  //afterConnection();
   menu();
 });
 
@@ -25,13 +25,59 @@ const afterConnection = () => {
   });
 };
 */
-
-const menu = () => {
-  inquirer.prompt({
+const menuPrompts = [
+  {
     type: "list",
     name: "Menu",
-    message: "Choose something!",
-    choices: ["yes", "no"],
+    message: "What would you like to do?",
+    choices: [
+      "Add Department",
+      "Add a Role",
+      "Add an Employee",
+      "View Departments",
+      "View Roles",
+      "View Employees",
+      "Update the Roles",
+      "Exit",
+    ],
+  },
+];
+
+const menu = () => {
+  inquirer.prompt(menuPrompts).then((answers) => {
+    switch (answers.Menu) {
+      case "Add Department":
+        addDepartment();
+        break;
+
+      case "Add a role":
+        addRole();
+        break;
+
+      case "Add an Employee":
+        addEmployees();
+        break;
+
+      case "View Departments":
+        viewDepartments();
+        break;
+
+      case "View Roles":
+        viewRoles();
+        break;
+
+      case "View Employees":
+        viewEmployees();
+        break;
+
+      case "Update the Roles":
+        upDateRoles();
+        break;
+
+      case "Exit":
+        connection.end();
+        break;
+    }
   });
 };
 
@@ -41,7 +87,14 @@ const addRole = () => {};
 
 const addEmployees = () => {};
 
-const viewDepartments = () => {};
+const viewDepartments = () => {
+  connection.query("SELECT * FROM department", (err, data) => {
+    if (err) throw err;
+
+    console.table(data);
+    menu();
+  });
+};
 
 const viewRoles = () => {};
 
