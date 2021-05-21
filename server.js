@@ -3,11 +3,11 @@ const inquirer = require("inquirer");
 const table = require("console.table");
 
 const connection = mysql.createConnection({
-  host: "localhost",
-  port: 3306,
-  user: "root",
-  password: "Brownie125298",
-  database: "employee_db",
+  host: "localhost", //Your host name
+  port: 3306, //your port
+  user: "root", //your username
+  password: "", //your password
+  database: "employee_db", //your database
 });
 
 connection.connect((err) => {
@@ -230,7 +230,6 @@ const viewEmployees = () => {
   });
 };
 
-//Needs Work!
 // const updateRoleId = () => {
 //   inquirer.prompt(updateEmpRolePrompts).then((answers) => {
 //     connection.query(
