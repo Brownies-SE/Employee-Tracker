@@ -55,21 +55,42 @@ const addRolePrompts = [
   {
     type: "input",
     name: "newTitle",
-    message: "New employee's title",
+    message: "New employee's title: ",
   },
   {
     type: "input",
     name: "newSalary",
-    message: "Enter Employee's salary",
+    message: "Enter Employee's salary: ",
   },
   {
     type: "input",
     name: "newDepartmentId",
-    message: "Employee's new department Id",
+    message: "Employee's new department Id: ",
   },
 ];
 
-const addEmployeePrompts = [{}];
+const addEmployeePrompts = [
+  {
+    type: "input",
+    name: "firstName",
+    message: "Enter employee's first name: ",
+  },
+  {
+    type: "input",
+    name: "lastName",
+    message: "Enter Employee's last name: ",
+  },
+  {
+    type: "input",
+    name: "roleID",
+    message: "Enter employee's role Id: ",
+  },
+  {
+    type: "input",
+    name: "managerID",
+    message: "Enter employee's manager Id: ",
+  },
+];
 
 const menu = () => {
   inquirer.prompt(menuPrompts).then((answers) => {
@@ -148,14 +169,15 @@ const addRole = () => {
 };
 
 const addEmployees = () => {
-  nquirer.prompt(addRolePrompts).then((answers) => {
+  inquirer.prompt(addEmployeePrompts).then((answers) => {
     connection.query(
-      "INSERT INTO role SET ?",
+      "INSERT INTO employee SET ?",
       [
         {
-          title: answers.newTitle,
-          salary: answers.newSalary,
-          department_id: answers.newDepartmentId,
+          first_name: answers.firstName,
+          last_name: answers.lastName,
+          role_id: answers.roleID,
+          manager_id: answers.managerID,
         },
       ],
       (err, data) => {
