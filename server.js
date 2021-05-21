@@ -96,8 +96,22 @@ const viewDepartments = () => {
   });
 };
 
-const viewRoles = () => {};
+const viewRoles = () => {
+  connection.query("SELECT * FROM role", (err, data) => {
+    if (err) throw err;
 
-const viewEmployees = () => {};
+    console.table(data);
+    menu();
+  });
+};
+
+const viewEmployees = () => {
+  connection.query("SELECT * FROM employee", (err, data) => {
+    if (err) throw err;
+
+    console.table(data);
+    menu();
+  });
+};
 
 const upDateRoles = () => {};
