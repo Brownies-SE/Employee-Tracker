@@ -43,6 +43,34 @@ const menuPrompts = [
   },
 ];
 
+const departmentPrompts = [
+  {
+    type: "input",
+    name: "newDepartment",
+    message: "New department name: ",
+  },
+];
+
+const addRolePrompts = [
+  {
+    type: "input",
+    name: "newTitle",
+    message: "New employee's title",
+  },
+  {
+    type: "input",
+    name: "newSalary",
+    message: "Enter Employee's salary",
+  },
+  {
+    type: "input",
+    name: "newDepartmentId",
+    message: "Employee's new department Id",
+  },
+];
+
+const addEmployeePrompts = [{}];
+
 const menu = () => {
   inquirer.prompt(menuPrompts).then((answers) => {
     switch (answers.Menu) {
@@ -50,7 +78,7 @@ const menu = () => {
         addDepartment();
         break;
 
-      case "Add a role":
+      case "Add a Role":
         addRole();
         break;
 
@@ -81,11 +109,63 @@ const menu = () => {
   });
 };
 
-const addDepartment = () => {};
+const addDepartment = () => {
+  inquirer.prompt(departmentPrompts).then((answers) => {
+    connection.query(
+      "INSERT INTO department SET ?",
+      [
+        {
+          name: answers.newDepartment,
+        },
+      ],
+      (err, data) => {
+        if (err) throw err;
+        //console.table(data);
+        menu();
+      }
+    );
+  });
+};
 
-const addRole = () => {};
+const addRole = () => {
+  inquirer.prompt(addRolePrompts).then((answers) => {
+    connection.query(
+      "INSERT INTO role SET ?",
+      [
+        {
+          title: answers.newTitle,
+          salary: answers.newSalary,
+          department_id: answers.newDepartmentId,
+        },
+      ],
+      (err, data) => {
+        if (err) throw err;
+        //console.table(data);
+        menu();
+      }
+    );
+  });
+};
 
-const addEmployees = () => {};
+const addEmployees = () => {
+  nquirer.prompt(addRolePrompts).then((answers) => {
+    connection.query(
+      "INSERT INTO role SET ?",
+      [
+        {
+          title: answers.newTitle,
+          salary: answers.newSalary,
+          department_id: answers.newDepartmentId,
+        },
+      ],
+      (err, data) => {
+        if (err) throw err;
+        //console.table(data);
+        menu();
+      }
+    );
+  });
+};
 
 const viewDepartments = () => {
   connection.query("SELECT * FROM department", (err, data) => {
@@ -105,6 +185,7 @@ const viewRoles = () => {
   });
 };
 
+//I think they want more than this.
 const viewEmployees = () => {
   connection.query("SELECT * FROM employee", (err, data) => {
     if (err) throw err;

@@ -35,8 +35,8 @@ VALUES ("Production Manager", 80000, 8), ("Marketing Manager", 50000, 1), ("Rese
 ("Engineer 1", 70000, 2);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Josh", "Brown", 1, 8), ("Peter", "Bishop", 2, 5),("TJ", "Courey", 6, 8),("Jack", "Nuener", 7, 5);
+VALUES ("Josh", "Brown", 1, 8), ("Peter", "Bishop", 2, 5),("TJ", "Courey", 6, 8),("Jack", "Neuner", 7, 5);
 
-SELECT * FROM department;
-SELECT * FROM role;
-SELECT * FROM employee;
+-- SELECT * FROM department;
+-- SELECT * FROM role;
+-- SELECT * FROM employee;
