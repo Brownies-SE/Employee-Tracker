@@ -6,7 +6,7 @@ const connection = mysql.createConnection({
   host: "localhost", //Your host name
   port: 3306, //your port
   user: "root", //your username
-  password: "", //your password
+  password: "Brownie125298", //your password
   database: "employee_db", //your database
 });
 
@@ -38,6 +38,9 @@ const menuPrompts = [
       "View Roles",
       "View Employees",
       "Update the Roles",
+      "Delete Employee",
+      "Delete department",
+      "Delete role",
       "Exit",
     ],
   },
@@ -95,16 +98,49 @@ const addEmployeePrompts = [
 const updateEmpRolePrompts = [
   {
     type: "input",
-    name: "getEmployeeNumber",
-    message: "Enter employee's role Id: ",
+    name: "getRoleId",
+    message: "Enter the Role Id: ",
   },
   {
     type: "input",
-    name: "newEmployeeNumber",
-    message: "Enter employee's new Id: ",
+    name: "getEmployeetitle",
+    message: "Enter employee's new title: ",
+  },
+  {
+    type: "input",
+    name: "newEmployeeSalary",
+    message: "Enter employee's new salary: ",
+  },
+  {
+    type: "input",
+    name: "newEmployeedId",
+    message: "Enter employee's new department Id: ",
   },
 ];
 
+const deleteEmployeePrompts = [
+  {
+    name: "employeeId",
+    type: "input",
+    message: "Enter the Id of the employee you would like to delete: ",
+  },
+];
+
+const deleteDepartmentPrompts = [
+  {
+    name: "departmentName",
+    type: "input",
+    message: "Enter the Id of the department to delete: ",
+  },
+];
+
+const deleteRolePrompts = [
+  {
+    name: "deleteRoleId",
+    type: "input",
+    message: "Enter the role's id you would like to delete:  ",
+  },
+];
 const menu = () => {
   inquirer.prompt(menuPrompts).then((answers) => {
     switch (answers.Menu) {
@@ -136,7 +172,23 @@ const menu = () => {
         updateRoleId();
         break;
 
+      case "Delete Employee":
+        deleteEmployee();
+        break;
+
+      case "Delete department":
+        deleteDepartment();
+        break;
+
+      case "Delete role":
+        deleteRole();
+        break;
+
       case "Exit":
+        connection.end();
+        break;
+
+      default:
         connection.end();
         break;
     }
@@ -155,7 +207,9 @@ const addDepartment = () => {
       (err, data) => {
         if (err) throw err;
         //console.table(data);
-        menu();
+        console.log("\n");
+        viewDepartments();
+        //menu();
       }
     );
   });
@@ -230,38 +284,64 @@ const viewEmployees = () => {
   });
 };
 
-// const updateRoleId = () => {
-//   inquirer.prompt(updateEmpRolePrompts).then((answers) => {
-//     connection.query(
-//       "UPDATE employee SET role_id ? WHERE ?",
-//       [
-//         {
-//           role_id: answers.newEmployeeNumber,
-//         },
-//         {
-//           id: answers.getEmployeeNumber,
-//         },
-//       ],
-//       (err, data) => {
-//         if (err) throw err;
-//         //console.table(data);
-//         menu();
-//       }
-//     );
-//   });
-// };
-
 const updateRoleId = () => {
   inquirer.prompt(updateEmpRolePrompts).then((answers) => {
-    const updateEmployee = answers.getEmployeeNumber;
-    const updateNewRole = answers.newEmployeeNumber;
+    const updateEmployeeTitle = answers.getEmployeetitle;
+    const updateNewSalary = answers.newEmployeeSalary;
+    const updateDepartmentId = answers.newEmployeedId;
     connection.query(
-      `UPDATE employee SET role_id = "${updateNewRole}"  WHERE id = "${updateEmployee}"`,
+      `UPDATE role SET title = "${updateEmployeeTitle}", salary = "${updateNewSalary}", department_id = ${updateDepartmentId}  WHERE id = "${answers.getRoleId}"`,
 
       (err, data) => {
         if (err) throw err;
         //console.table(data);
-        menu();
+        viewRoles();
+        //menu();
+      }
+    );
+  });
+};
+
+const deleteEmployee = () => {
+  inquirer.prompt(deleteEmployeePrompts).then((answers) => {
+    connection.query(
+      "DELETE FROM employee WHERE id = ?",
+      [answers.employeeId],
+      (err, data) => {
+        if (err) throw err;
+        console.log("Successfully deleted");
+        viewEmployees();
+        //menu();
+      }
+    );
+  });
+};
+
+const deleteDepartment = () => {
+  inquirer.prompt(deleteDepartmentPrompts).then((answers) => {
+    connection.query(
+      "DELETE FROM department WHERE name = ?",
+      [answers.departmentName],
+      (err, data) => {
+        if (err) throw err;
+        console.log("Successfully deleted");
+        viewDepartments();
+        //menu();
+      }
+    );
+  });
+};
+
+const deleteRole = () => {
+  inquirer.prompt(deleteRolePrompts).then((answers) => {
+    connection.query(
+      "DELETE FROM role WHERE id = ?",
+      [answers.deleteRoleId],
+      (err, data) => {
+        if (err) throw err;
+        console.log("Successfully deleted");
+        viewRoles();
+        //menu();
       }
     );
   });
