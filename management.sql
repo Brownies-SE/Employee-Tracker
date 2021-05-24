@@ -31,12 +31,14 @@ INSERT INTO department (name)
 VALUES ("Production"), ("Research"), ("Marketing"), ("Engineering");
 
 INSERT INTO role (title, salary, department_id)
-VALUES ("Production Manager", 80000, 8), ("Marketing Manager", 50000, 1), ("Research Assisstant", 45000, 5),
-("Engineer 1", 70000, 2);
+VALUES ("Production Manager", 80000, 1), ("Marketing Manager", 50000, 3), ("Research Assisstant", 45000, 2),
+("Engineer 1", 70000, 4);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("John", "Brown", 6, 8), ("Peter", "Bishop", 2, 5),("TJ", "Courey", 6, 8),("Jack", "Neuner", 7, 5);
+VALUES ("John", "Brown", 1, 3), ("Peter", "Bishop", 2, 5),("TJ", "Courey", 4, 8),("Jack", "Neuner", 3, 5);
 
 -- SELECT * FROM department;
 -- SELECT * FROM role;
 -- SELECT * FROM employee;
+
+-- SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id

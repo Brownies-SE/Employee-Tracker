@@ -276,12 +276,15 @@ const viewRoles = () => {
 
 //I think they want more than this.
 const viewEmployees = () => {
-  connection.query("SELECT * FROM employee", (err, data) => {
-    if (err) throw err;
+  connection.query(
+    "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department on role.department_id = department.id",
+    (err, data) => {
+      if (err) throw err;
 
-    console.table(data);
-    menu();
-  });
+      console.table(data);
+      menu();
+    }
+  );
 };
 
 const updateRoleId = () => {
