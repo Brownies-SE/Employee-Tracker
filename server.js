@@ -1,12 +1,11 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-const table = require("console.table");
 
 const connection = mysql.createConnection({
   host: "localhost", //Your host name
   port: 3306, //your port
   user: "root", //your username
-  password: "", //your password
+  password: "Brownie125298", //your password
   database: "employee_db", //your database
 });
 
@@ -16,15 +15,6 @@ connection.connect((err) => {
   menu();
 });
 
-/*
-const afterConnection = () => {
-  connection.query("SELECT * FROM employee", (err, res) => {
-    if (err) throw err;
-    console.log(res);
-    connection.end();
-  });
-};
-*/
 const menuPrompts = [
   {
     type: "list",
@@ -37,7 +27,7 @@ const menuPrompts = [
       "View Departments",
       "View Roles",
       "View Employees",
-      "Update the Roles",
+      "Update a Role",
       "Delete Employee",
       "Delete department",
       "Delete role",
@@ -168,7 +158,7 @@ const menu = () => {
         viewEmployees();
         break;
 
-      case "Update the Roles":
+      case "Update a Role":
         updateRoleId();
         break;
 
@@ -274,7 +264,6 @@ const viewRoles = () => {
   });
 };
 
-//I think they want more than this.
 const viewEmployees = () => {
   connection.query(
     "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department on role.department_id = department.id",
@@ -285,24 +274,6 @@ const viewEmployees = () => {
       menu();
     }
   );
-};
-
-const updateRoleId = () => {
-  inquirer.prompt(updateEmpRolePrompts).then((answers) => {
-    const updateEmployeeTitle = answers.getEmployeetitle;
-    const updateNewSalary = answers.newEmployeeSalary;
-    const updateDepartmentId = answers.newEmployeedId;
-    connection.query(
-      `UPDATE role SET title = "${updateEmployeeTitle}", salary = "${updateNewSalary}", department_id = ${updateDepartmentId}  WHERE id = "${answers.getRoleId}"`,
-
-      (err, data) => {
-        if (err) throw err;
-        //console.table(data);
-        viewRoles();
-        //menu();
-      }
-    );
-  });
 };
 
 const deleteEmployee = () => {
@@ -343,6 +314,24 @@ const deleteRole = () => {
       (err, data) => {
         if (err) throw err;
         console.log("Successfully deleted");
+        viewRoles();
+        //menu();
+      }
+    );
+  });
+};
+
+const updateRoleId = () => {
+  inquirer.prompt(updateEmpRolePrompts).then((answers) => {
+    const updateEmployeeTitle = answers.getEmployeetitle;
+    const updateNewSalary = answers.newEmployeeSalary;
+    const updateDepartmentId = answers.newEmployeedId;
+    connection.query(
+      `UPDATE role SET title = "${updateEmployeeTitle}", salary = "${updateNewSalary}", department_id = ${updateDepartmentId}  WHERE id = "${answers.getRoleId}"`,
+
+      (err, data) => {
+        if (err) throw err;
+        //console.table(data);
         viewRoles();
         //menu();
       }
