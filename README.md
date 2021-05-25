@@ -24,7 +24,7 @@ Using this commandline application, an employer can view and manage their depart
 
 This project is used to create a database of employees. With this database the user can create, delete, and update the information without using sequalize.
 
-<img src = https://raw.githubusercontent.com/Brownies-SE/Team-Profile-Generator/main/img/Capture.PNG>
+<img src = https://raw.githubusercontent.com/Brownies-SE/Employee-Tracker/main/img/Capture.PNG>
 
 # License
 
